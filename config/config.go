@@ -5,10 +5,10 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/xordataexchange/crypt/backend"
-	"github.com/xordataexchange/crypt/backend/consul"
-	"github.com/xordataexchange/crypt/backend/etcd"
-	"github.com/xordataexchange/crypt/encoding/secconf"
+	"github.com/somethingnew2-0/crypt/backend"
+	"github.com/somethingnew2-0/crypt/backend/consul"
+	"github.com/somethingnew2-0/crypt/backend/etcd"
+	"github.com/somethingnew2-0/crypt/encoding/secconf"
 )
 
 // A ConfigManager retrieves and decrypts configuration from a key/value store.
