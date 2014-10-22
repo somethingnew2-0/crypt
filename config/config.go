@@ -59,6 +59,19 @@ func (c configManager) Get(key string) ([]byte, error) {
 	return secconf.Decode(value, bytes.NewBuffer(c.keystore))
 }
 
+// Set endcodes and stores a secconf value at key.
+func (c configManager) Set(key string, value []byte) error {
+	encodedValue, err := secconf.Encode(value, bytes.NewBuffer(c.keystore))
+	if err != nil {
+		return err
+	}
+	return c.store.Set(key, encodedValue)
+}
+
+func (c configManager) List(key string) ([]string, error) {
+	return c.store.List(key)
+}
+
 type Response struct {
 	Value []byte
 	Error error

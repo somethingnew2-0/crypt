@@ -16,6 +16,9 @@ type Store interface {
 	// Set sets the provided key to value.
 	Set(key string, value []byte) error
 
+	// List lists the keys in a dir
+	List(key string) ([]string, error)
+
 	// Watch monitors a K/V store for changes to key.
 	Watch(key string, stop chan bool) <-chan *Response
 }
