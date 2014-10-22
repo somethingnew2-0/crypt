@@ -1,6 +1,8 @@
 package etcd
 
 import (
+	"errors"
+	"fmt"
 	"time"
 
 	"github.com/xordataexchange/crypt/backend"
@@ -28,6 +30,25 @@ func (c *Client) Get(key string) ([]byte, error) {
 func (c *Client) Set(key string, value []byte) error {
 	_, err := c.client.Set(key, string(value), 0)
 	return err
+}
+
+func (c *Client) List(key string) ([]string, error) {
+	resp, err := c.client.Get(key, false, false)
+	if err != nil {
+		return nil, err
+	}
+	if !resp.Node.Dir {
+		return nil, errors.New(fmt.Sprintf("Key \"%s\" is not a directory", key))
+	}
+
+	entries := []string{}
+	for _, node := range resp.Node.Nodes {
+		if !node.Dir {
+			entries = append(entries, node.Key)
+		}
+	}
+
+	return entries, nil
 }
 
 func (c *Client) Watch(key string, stop chan bool) <-chan *backend.Response {

@@ -44,6 +44,14 @@ func (c *Client) Set(key string, value []byte) error {
 	return err
 }
 
+func (c *Client) List(key string) ([]string, error) {
+	entries, _, err := c.client.Keys(key, "", nil)
+	if err != nil {
+		return nil, err
+	}
+	return entries, nil
+}
+
 func (c *Client) Watch(key string, stop chan bool) <-chan *backend.Response {
 	respChan := make(chan *backend.Response, 0)
 	go func() {

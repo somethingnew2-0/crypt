@@ -14,6 +14,8 @@ import (
 // A ConfigManager retrieves and decrypts configuration from a key/value store.
 type ConfigManager interface {
 	Get(key string) ([]byte, error)
+	Set(key string, value []byte) error
+	List(key string) ([]string, error)
 	Watch(key string, stop chan bool) <-chan *Response
 }
 
